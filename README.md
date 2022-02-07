@@ -47,3 +47,10 @@ También se han realizado cierta tareas de organización y mejora de código med
 
 - Lo que no funciona:
   - El botón "comprar" realiza la función de "cargar_productos", pero no muestra lo que se ha seleccionado sino que entiende que "No hay pedidos" y nunca se ve la tabla de productos comprados. Se ha repasado el código y comparado con uno que sí funciona y no se han encontrado diferencias.
+
+## Capturas de las páginas
+
+[Login](capturas/pedidos-login.png)
+[Home](capturas/pedidos-home.png)
+[Productos](capturas/pedidos-productos.png)
+[Carrito](capturas/pedidos-carrito.png)
