@@ -1,0 +1,75 @@
+<?php
+// comprueba que el usuario haya iniciado sesión o redirige
+require '../functions/sesiones.php';
+require_once '../functions/bd.php';
+comprobar_sesion();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap-utilities.min.css">
+    <link rel="stylesheet" href="../css/pages.css">
+
+    <title>Carrito de la compra</title>
+</head>
+
+<body>
+
+    <?php
+    require './cabecera.php';
+    require './pie.php';
+    echo "<h2>Carrito de la compra</h2>";
+    $productos = cargar_productos(array_keys($_SESSION['carrito']));
+    if ($productos === FALSE) {
+        echo "<p>No hay productos en el pedido</p>";
+        exit;
+    }
+
+    echo "<h2>Carrito de la compra</h2>";
+    echo "<div class='container'><table class='table table-striped' class='table-responsive'>"; // abre la tabla
+    echo "<tr>
+            <th class='col'>Nombre</th>
+            <th class='col'>Descripción</th>
+            <th class='col'>Peso</th>
+            <th class='col'>Unidades</th>
+            <th class='col'>Eliminar</th>
+        </tr>";
+
+    foreach ($productos as $producto) {
+        $cod = $producto['CodProd'];
+        $nom = $producto['Nombre'];
+        $des = $producto['Descripcion'];
+        $peso = $producto['Peso'];
+        $unidades = $_SESSION['carrito'][$cod];
+
+        echo "<tr>
+                <td>$nom</td>
+                <td>$des</td>
+                <td>$peso</td>
+                <td>$unidades</td>
+                <td>
+                    <form action='eliminar.php' method='POST'>
+                        <input name='unidades' type='number' min='1' value='1'>
+                        <input type='submit' value='Eliminar'>
+                        <input name='cod' type='hidden' value='$cod'>
+                    </form>
+                </td>
+        </tr>";
+    }
+
+    echo "</table></div>";
+    ?>
+
+    <hr>
+    <a href="./procesar_pedido.php">Realizar pedido</a>
+</body>
+
+</html>
